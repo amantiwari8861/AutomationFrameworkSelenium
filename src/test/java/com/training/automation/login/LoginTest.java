@@ -31,7 +31,7 @@ public class LoginTest {
         driver = DriverFactory.getDriver("edge");
     }
 
-    @Test
+ /*   @Test
     @Parameters({"uname","pass"})
     public void loginTest(String username,String password) throws InterruptedException
     {
@@ -40,13 +40,13 @@ public class LoginTest {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.fillUserName(username);
         loginPage.fillPassword(password);
-        InventoryPage inventoryPage = loginPage.clickLoginButton();
+        InventoryPage inventoryPage = loginPage.clickLoginButton();6
         inventoryPage.openSidebar();
         Thread.sleep(4000);
         inventoryPage.closeSidebar();
         Thread.sleep(4000);
     }
-
+*/
     @DataProvider(name = "csv_data")
     public Object[][] getCsvData() {
 

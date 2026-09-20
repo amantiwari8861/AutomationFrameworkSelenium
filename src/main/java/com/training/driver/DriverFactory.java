@@ -20,6 +20,8 @@ public class DriverFactory {
         }
         else if(browser.equalsIgnoreCase("edge"))
         {
+            //System.setProperty("webdriver.edge.driver", "C:\\Users\\A181166\\Downloads\\edgedriver_win64\\msedgedriver.exe");
+
             driver = new EdgeDriver();
         }
         else {
