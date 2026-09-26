@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Automation Suite">
+
+    <test name="Regression Tests">
+
+        <classes>
+            <class name="com.training.automation.runner.CucumberTestRunner"/>
+        </classes>
+
+    </test>
+
+</suite>
