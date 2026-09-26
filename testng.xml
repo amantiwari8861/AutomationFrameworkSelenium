@@ -13,7 +13,7 @@
         <classes>
             <class name="com.training.automation.login.LoginTest">
                 <methods>
-                    <include name="loginTest"></include>
+                    <include name="loginTestData"></include>
                 </methods>
             </class>
         </classes>

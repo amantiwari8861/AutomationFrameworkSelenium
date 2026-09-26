@@ -31,21 +31,21 @@ public class LoginTest {
         driver = DriverFactory.getDriver("edge");
     }
 
-    @Test
-    @Parameters({"uname","pass"})
-    public void loginTest(String username,String password) throws InterruptedException
-    {
-        driver.get("https://saucedemo.com");
-        driver.manage().window().maximize();
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.fillUserName(username);
-        loginPage.fillPassword(password);
-        InventoryPage inventoryPage = loginPage.clickLoginButton();
-        inventoryPage.openSidebar();
-        Thread.sleep(4000);
-        inventoryPage.closeSidebar();
-        Thread.sleep(4000);
-    }
+//    @Test
+//    @Parameters({"uname","pass"})
+//    public void loginTest(String username,String password) throws InterruptedException
+//    {
+//        driver.get("https://saucedemo.com");
+//        driver.manage().window().maximize();
+//        LoginPage loginPage = new LoginPage(driver);
+//        loginPage.fillUserName(username);
+//        loginPage.fillPassword(password);
+//        InventoryPage inventoryPage = loginPage.clickLoginButton();
+//        inventoryPage.openSidebar();
+//        Thread.sleep(4000);
+//        inventoryPage.closeSidebar();
+//        Thread.sleep(4000);
+//    }
 
     @DataProvider(name = "csv_data")
     public Object[][] getCsvData() {

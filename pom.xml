@@ -64,6 +64,18 @@
           <version>2.0.19</version>
           <scope>compile</scope>
       </dependency>
+      <dependency>
+          <groupId>io.cucumber</groupId>
+          <artifactId>cucumber-java</artifactId>
+          <version>7.34.9</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>io.cucumber</groupId>
+          <artifactId>cucumber-testng</artifactId>
+          <version>7.34.9</version>
+          <scope>test</scope>
+      </dependency>
   </dependencies>
 
   <build>
