@@ -3,11 +3,18 @@ package com.training.automation.steps;
 import com.training.driver.DriverManager;
 import com.training.pages.LoginPage;
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+
+import java.time.Duration;
 
 public class LoginSteps {
 
@@ -30,7 +37,7 @@ public class LoginSteps {
         log.info("Starting login test");
     }
 
-    @When("user enters email {string}")
+    @When("user enters username {string}")
     public void userEntersUsername(String username) {
 
         log.debug("Username: {}", username);
@@ -69,5 +76,41 @@ public class LoginSteps {
         );
 
         log.info("Login successful");
+    }
+
+    @Then("user should remain on the login page")
+    public void userShouldRemainOnLoginPage() {
+
+        String expectedUrl = "https://www.saucedemo.com/";
+        String actualUrl = DriverManager.getDriver().getCurrentUrl();
+
+        Assert.assertEquals(
+                actualUrl,
+                expectedUrl,
+                "User was redirected from the login page"
+        );
+
+        log.info("User correctly remained on the login page");
+    }
+    @Then("login error should be displayed")
+    public void loginErrorShouldBeDisplayed() {
+
+        WebDriver driver = DriverManager.getDriver();
+
+        WebDriverWait wait =
+                new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        WebElement errorMessage = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.cssSelector("[data-test='error']")
+                )
+        );
+
+        Assert.assertTrue(
+                errorMessage.isDisplayed(),
+                "Login error message is not displayed"
+        );
+
+        log.info("Login error displayed: {}", errorMessage.getText());
     }
 }

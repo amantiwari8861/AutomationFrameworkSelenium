@@ -1,36 +1,24 @@
 package com.training.automation.login;
 
-import com.training.driver.DriverFactory;
-import com.training.pages.InventoryPage;
+import com.training.automation.base.BaseTest;
 import com.training.pages.LoginPage;
 import com.training.util.CsvUtil;
 import com.training.util.ExcelUtil;
 import com.training.util.JsonUtil;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WindowType;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import static org.testng.Assert.assertEquals;
-
-public class LoginTest {
-    private WebDriver driver;
+public class LoginTest extends BaseTest {
     private static final Logger log = LoggerFactory.getLogger(LoginTest.class);
-
-    @BeforeClass
-    public void init()
-    {
-        driver = DriverFactory.getDriver("edge");
-    }
-
 //    @Test
 //    @Parameters({"uname","pass"})
 //    public void loginTest(String username,String password) throws InterruptedException
@@ -71,51 +59,67 @@ public class LoginTest {
 
     @DataProvider(name = "excel_data")
     public Object[][] getExcelData() {
-        return ExcelUtil.readExcel("src/test/resources/testdata/credentials.xlsx","Sheet1");
+        return ExcelUtil.readExcel("src/test/resources/testdata/credentials.xlsx", "Sheet1");
     }
+
     @DataProvider(name = "json_data")
     public Object[][] getJsonData() {
         return JsonUtil.readJson("src/test/resources/testdata/credentials.json");
     }
 
 
-//    @Test(dataProvider = "csv_data")
+    //    @Test(dataProvider = "csv_data")
 //    @Test(dataProvider = "excel_data")
     @Test(dataProvider = "json_data")
-    public void loginTestData(String username,String password) throws InterruptedException
-    {
-        driver.get("https://saucedemo.com");
-        driver.manage().window().maximize();
+    public void loginTestData(
+            String username,
+            String password,
+            String expectedUrl,
+            boolean loginExpected) {
+
+        driver.get("https://www.saucedemo.com/");
+
         LoginPage loginPage = new LoginPage(driver);
+
         log.info("Starting login test");
         log.debug("Username: {}", username);
+        log.debug("Expected URL: {}", expectedUrl);
+        log.debug("Login expected: {}", loginExpected);
+
         loginPage.fillUserName(username);
         loginPage.fillPassword(password);
         loginPage.clickLoginButton();
+
         log.info("Login button clicked");
-        boolean loggedIn=false;
-        try {
-            Assert.assertEquals(
-                    driver.getCurrentUrl(),
-                    "https://www.saucedemo.com/inventory.html"
-            );
-            loggedIn=true;
-        } catch (AssertionError e) {
-            if (!loggedIn) {
-                log.warn("Login may not have succeeded");
-            }
-            log.error("Login URL validation failed", e);
-            throw e;
-        }
 
+        WebDriverWait wait =
+                new WebDriverWait(driver, Duration.ofSeconds(15));
 
+        /*
+         * Wait for the URL specified in the test data.
+         *
+         * This works for both:
+         * SUCCESS -> inventory.html
+         * LOCKED  -> login page
+         */
+        wait.until(ExpectedConditions.urlToBe(expectedUrl));
 
+        String actualUrl = driver.getCurrentUrl();
+
+        log.info("Expected URL: {}", expectedUrl);
+        log.info("Actual URL: {}", actualUrl);
+
+        Assert.assertEquals(
+                actualUrl,
+                expectedUrl,
+                "URL validation failed for user: " + username
+        );
+
+        log.info(
+                "Login test completed successfully for {}. Expected login: {}",
+                username,
+                loginExpected
+        );
     }
 
-
-    @AfterClass
-    public void tearDown()
-    {
-        driver.quit();
-    }
 }

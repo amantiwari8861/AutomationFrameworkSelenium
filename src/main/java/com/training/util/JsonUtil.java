@@ -4,7 +4,6 @@ import com.training.model.LoginData;
 import tools.jackson.databind.ObjectMapper;
 
 import java.io.File;
-import java.io.IOException;
 
 public class JsonUtil {
 
@@ -24,12 +23,14 @@ public class JsonUtil {
                     );
 
             Object[][] data =
-                    new Object[loginData.length][2];
+                    new Object[loginData.length][4];
 
             for (int i = 0; i < loginData.length; i++) {
 
                 data[i][0] = loginData[i].username();
                 data[i][1] = loginData[i].password();
+                data[i][2] = loginData[i].expectedUrl();
+                data[i][3] = loginData[i].loginExpected();
             }
 
             return data;
