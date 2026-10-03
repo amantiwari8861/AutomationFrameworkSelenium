@@ -21,11 +21,14 @@ pipeline {
     }
      post {
         always {
+                    junit allowEmptyResults: true,
+                          testResults: 'target/surefire-reports/*.xml'
 
-            junit allowEmptyResults: true,
-                  testResults: 'target/surefire-reports/*.xml'
-
-        }
+                    allure([
+                        includeProperties: false,
+                        results: [[path: 'allure-results']]
+                    ])
+                }
 
         success {
             echo 'All Selenium tests passed.'
