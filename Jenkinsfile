@@ -28,6 +28,11 @@ pipeline {
                         includeProperties: false,
                         results: [[path: 'allure-results']]
                     ])
+
+            archiveArtifacts(
+                artifacts: 'allure-results/**',
+                allowEmptyArchive: true
+            )
                 }
 
         success {

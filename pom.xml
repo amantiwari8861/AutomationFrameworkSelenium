@@ -76,6 +76,18 @@
           <version>7.34.9</version>
           <scope>test</scope>
       </dependency>
+      <dependency>
+          <groupId>io.qameta.allure</groupId>
+          <artifactId>allure-testng</artifactId>
+          <version>3.0.0</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.aspectj</groupId>
+          <artifactId>aspectjweaver</artifactId>
+          <version>1.9.25.1</version>
+          <scope>runtime</scope>
+      </dependency>
   </dependencies>
 
   <build>
